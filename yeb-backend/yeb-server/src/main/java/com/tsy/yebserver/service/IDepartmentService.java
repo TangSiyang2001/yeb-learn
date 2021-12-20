@@ -2,6 +2,7 @@ package com.tsy.yebserver.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tsy.yebserver.dao.entity.Department;
+import com.tsy.yebserver.vo.Result;
 
 /**
  * <p>
@@ -13,4 +14,10 @@ import com.tsy.yebserver.dao.entity.Department;
  */
 public interface IDepartmentService extends IService<Department> {
 
+    /**
+     * 获取所有部门
+     * @return 结果
+     * @param parentId 父id
+     */
+    Result listDepartmentsByParentId(Integer parentId);
 }

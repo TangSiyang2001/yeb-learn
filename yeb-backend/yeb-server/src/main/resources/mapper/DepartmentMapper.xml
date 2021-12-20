@@ -1,4 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsy.yebserver.dao.mapper.DepartmentMapper" >
+<mapper namespace="com.tsy.yebserver.dao.mapper.DepartmentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tsy.yebserver.dao.entity.Department">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parentId" property="parentId"/>
+        <result column="depPath" property="depPath"/>
+        <result column="enabled" property="enabled"/>
+        <result column="isParent" property="isParent"/>
+    </resultMap>
+
+    <resultMap id="DepartmentWithChildren" type="com.tsy.yebserver.dao.entity.Department" extends="BaseResultMap">
+        <collection property="children" ofType="com.tsy.yebserver.dao.entity.Department"
+                    select="listDepartmentsByParentId" column="id">
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,parentId,depPath,enabled,isParent
+    </sql>
+
+    <select id="listDepartmentsByParentId" resultMap="DepartmentWithChildren">
+        select
+        <include refid="Base_Column_List"/>
+        from t_department
+        where parentId = #{parentId}
+    </select>
 </mapper>
