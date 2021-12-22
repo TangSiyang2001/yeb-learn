@@ -11,7 +11,6 @@ import com.tsy.yebserver.vo.MenuVo;
 import com.tsy.yebserver.vo.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -37,7 +36,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     @Override
     public List<MenuVo> getMenuByAdminId() {
-        final Admin admin = (Admin) ssoService.getLoginAuthentication().getPrincipal();
+        final Admin admin = ssoService.getLoginAdmin();
         return copyList(menuMapper.getMenusByAdminId(admin.getId()));
     }
 

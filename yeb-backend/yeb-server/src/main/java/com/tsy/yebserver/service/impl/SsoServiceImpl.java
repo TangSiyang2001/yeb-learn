@@ -1,5 +1,6 @@
 package com.tsy.yebserver.service.impl;
 
+import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.service.ISsoService;
 import com.tsy.yebserver.utils.JwtUtils;
 import com.tsy.yebserver.vo.Result;
@@ -63,6 +64,12 @@ public class SsoServiceImpl implements ISsoService {
     public Authentication getLoginAuthentication(){
         return SecurityContextHolder.getContext().getAuthentication();
     }
+
+    @Override
+    public Admin getLoginAdmin() {
+        return (Admin) getLoginAuthentication().getPrincipal();
+    }
+
 
     @Override
     public void setLoginAuthentication(HttpServletRequest request, UserDetails userDetails){

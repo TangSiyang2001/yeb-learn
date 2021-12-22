@@ -2,6 +2,7 @@ package com.tsy.yebserver.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tsy.yebserver.dao.entity.Admin;
+import com.tsy.yebserver.vo.Result;
 
 /**
  * <p>
@@ -18,4 +19,11 @@ public interface IAdminService extends IService<Admin> {
      * @return 用户vo
      */
     Admin getAdminInfoByUsername(String username);
+
+    /**
+     * 根据关键词获取管理员
+     * @param keywords 关键词
+     * @return 结果
+     */
+    Result getAdminByKeywords(String keywords);
 }

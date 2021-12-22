@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.dao.mapper.AdminMapper;
 import com.tsy.yebserver.service.IAdminService;
+import com.tsy.yebserver.service.ISsoService;
+import com.tsy.yebserver.vo.Result;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,10 +25,20 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Resource
     private AdminMapper adminMapper;
 
+    @Resource
+    private ISsoService ssoService;
+
     @Override
     public Admin getAdminInfoByUsername(String username) {
         return adminMapper.selectOne(new LambdaQueryWrapper<Admin>()
                 .eq(Admin::getUsername, username)
                 .eq(Admin::getEnabled, true));
+    }
+
+    @Override
+    public Result getAdminByKeywords(String keywords) {
+        final Integer id = (ssoService.getLoginAdmin()).getId();
+        //TODO:接着把剩下的操作员功能完成
+        return null;
     }
 }

@@ -4,6 +4,7 @@ package com.tsy.yebserver.controller;
 import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.service.IAdminService;
 import com.tsy.yebserver.vo.AdminVo;
+import com.tsy.yebserver.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -25,7 +26,7 @@ import java.security.Principal;
  */
 @Api(tags = "AdminController")
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/system/admin")
 public class AdminController {
 
     @Resource
@@ -39,5 +40,11 @@ public class AdminController {
         AdminVo adminVo = new AdminVo();
         BeanUtils.copyProperties(admin,adminVo);
         return adminVo;
+    }
+
+    @ApiOperation("获取操作员")
+    @GetMapping
+    public Result getAdminByKeywords(String keywords){
+        return adminService.getAdminByKeywords(keywords);
     }
 }

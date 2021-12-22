@@ -1,5 +1,6 @@
 package com.tsy.yebserver.service;
 
+import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.LoginParam;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,12 @@ public interface ISsoService {
      * @return 认证信息
      */
     Authentication getLoginAuthentication();
+
+    /**
+     * 获取登录的管理员
+     * @return 管理员
+     */
+    Admin getLoginAdmin();
 
     /**
      * 设置登录认证信息
