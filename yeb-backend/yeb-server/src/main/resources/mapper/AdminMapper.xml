@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsy.yebserver.dao.mapper.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.tsy.yebserver.dao.entity.Admin">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="telephone" property="telephone" />
+        <result column="address" property="address" />
+        <result column="enabled" property="enabled" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="userFace" property="userFace" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <resultMap id="AdminWithRole" type="com.tsy.yebserver.dao.entity.Admin" extends="BaseResultMap">
+        <collection property="roles" ofType="com.tsy.yebserver.dao.entity.Role">
+            <id column="rid" property="id"/>
+            <result column="r_name" property="name"/>
+            <result column="r_name_zh" property="nameZh"/>
+        </collection>
+    </resultMap>
+    <select id="getAdminByKeywords" resultMap="AdminWithRole">
+        SELECT
+            a.*,
+            r.id as rid,
+            r.`name` as r_name,
+            r.nameZh as r_name_zh
+        FROM
+            t_admin a,
+            t_role r,
+            t_admin_role ar
+        WHERE
+            a.id != #{adminId}
+          <if test="keywords != null and keywords != ''">
+              AND a.id = ar.adminId
+              AND ar.rid = r.id
+              AND a.`name` LIKE CONCAT('%','#{keywords}','%')
+          </if>
+    </select>
+
+
+</mapper>

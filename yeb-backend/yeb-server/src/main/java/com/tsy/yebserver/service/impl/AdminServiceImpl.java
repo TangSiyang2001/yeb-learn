@@ -37,8 +37,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     public Result getAdminByKeywords(String keywords) {
-        final Integer id = (ssoService.getLoginAdmin()).getId();
-        //TODO:接着把剩下的操作员功能完成
-        return null;
+        final Integer adminId = (ssoService.getLoginAdmin()).getId();
+        return Result.success(adminMapper.getAdminByKeywords(adminId,keywords));
     }
 }
