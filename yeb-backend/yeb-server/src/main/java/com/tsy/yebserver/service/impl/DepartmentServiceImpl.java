@@ -6,6 +6,7 @@ import com.tsy.yebserver.dao.mapper.DepartmentMapper;
 import com.tsy.yebserver.service.IDepartmentService;
 import com.tsy.yebserver.vo.Result;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -34,6 +35,18 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
         departmentMapper.addDepartment(department);
         if(department.getResult() == 1){
             return Result.success(department);
+        }
+        return Result.fail(Result.CodeMsg.OPERATION_FAILED);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result deleteDepartmentById(Integer id) {
+        Department department = new Department();
+        department.setId(id);
+        departmentMapper.deleteDepartment(department);
+        if(department.getResult() == 1){
+            return Result.success(null);
         }
         return Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }

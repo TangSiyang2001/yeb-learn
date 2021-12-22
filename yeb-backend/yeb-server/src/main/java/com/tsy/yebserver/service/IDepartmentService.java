@@ -27,4 +27,11 @@ public interface IDepartmentService extends IService<Department> {
      * @return 结果
      */
     Result addDepartment(Department department);
+
+    /**
+     * 删除部门
+     * @param id 部门id
+     * @return 结果
+     */
+    Result deleteDepartmentById(Integer id);
 }

@@ -22,7 +22,9 @@
         id,name,parentId,depPath,enabled,isParent
     </sql>
 
-
+    <select id="deleteDepartment" statementType="CALLABLE">
+        call deleteDep(#{id},#{result,mode=OUT,jdbcType=INTEGER})
+    </select>
     <!--存储过程调用用select标签即可,statementType声明调用类型，默认是prepared，即prepared statement，调用时是预编译的,出参要指定类型并标记成OUT-->
     <select id="addDepartment" statementType="CALLABLE">
         call addDep(#{name},#{parentId},#{enabled},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})

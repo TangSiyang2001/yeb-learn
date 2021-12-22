@@ -37,4 +37,10 @@ public class DepartmentController {
     public Result addDepartment(@RequestBody Department department){
         return departmentService.addDepartment(department);
     }
+
+    @ApiOperation("删除部门")
+    @DeleteMapping("/{id}")
+    public Result deleteDepartment(@PathVariable Integer id){
+        return departmentService.deleteDepartmentById(id);
+    }
 }
