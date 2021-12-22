@@ -20,4 +20,11 @@ public interface IDepartmentService extends IService<Department> {
      * @param parentId 父id
      */
     Result listDepartmentsByParentId(Integer parentId);
+
+    /**
+     * 添加部门
+     * @param department 部门
+     * @return 结果
+     */
+    Result addDepartment(Department department);
 }

@@ -1,13 +1,12 @@
 package com.tsy.yebserver.controller;
 
 
+import com.tsy.yebserver.dao.entity.Department;
 import com.tsy.yebserver.service.IDepartmentService;
 import com.tsy.yebserver.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -31,5 +30,11 @@ public class DepartmentController {
     @GetMapping("/")
     public Result listDepartments(){
         return departmentService.listDepartmentsByParentId(-1);
+    }
+
+    @ApiOperation("添加部门")
+    @PutMapping("/")
+    public Result addDepartment(@RequestBody Department department){
+        return departmentService.addDepartment(department);
     }
 }

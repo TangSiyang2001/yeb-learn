@@ -22,4 +22,10 @@ public interface DepartmentMapper extends BaseMapper<Department> {
      * @return 结果列表
      */
     List<Department> listDepartmentsByParentId(Integer parentId);
+
+    /**
+     * 添加部门
+     * @param department 部门
+     */
+    void addDepartment(Department department);
 }

@@ -27,4 +27,14 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     public Result listDepartmentsByParentId(Integer parentId) {
         return Result.success(departmentMapper.listDepartmentsByParentId(parentId));
     }
+
+    @Override
+    public Result addDepartment(Department department) {
+        department.setEnabled(true);
+        departmentMapper.addDepartment(department);
+        if(department.getResult() == 1){
+            return Result.success(department);
+        }
+        return Result.fail(Result.CodeMsg.OPERATION_FAILED);
+    }
 }
