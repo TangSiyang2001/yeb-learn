@@ -60,7 +60,7 @@ public class AdminController {
 
     @ApiOperation("更新操作员角色")
     @PutMapping("/roles")
-    public Result updateAdminRoles(@RequestBody Integer adminId,Integer[] roleIds){
+    public Result updateAdminRoles(Integer adminId,Integer[] roleIds){
         return adminService.updateAdminRoles(adminId,roleIds);
     }
 }

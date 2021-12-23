@@ -16,8 +16,8 @@
     
     <insert id="addAdminRoles">
         insert into t_admin_role(adminId,rid) values
-        <foreach collection="rids" item="rid" separator=",">
-            (#{adminId},#{rid})
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (#{adminId},#{roleId})
         </foreach>
     </insert>
 
