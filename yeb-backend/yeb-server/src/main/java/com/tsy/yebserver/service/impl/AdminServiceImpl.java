@@ -32,7 +32,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public Admin getAdminInfoByUsername(String username) {
         return adminMapper.selectOne(new LambdaQueryWrapper<Admin>()
                 .eq(Admin::getUsername, username)
-                .eq(Admin::getEnabled, true));
+                .eq(Admin::isEnabled, true));
     }
 
     @Override

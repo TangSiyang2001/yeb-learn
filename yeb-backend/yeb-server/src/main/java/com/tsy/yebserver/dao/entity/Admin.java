@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,7 +51,11 @@ public class Admin implements Serializable, UserDetails {
     @ApiModelProperty(value = "联系地址")
     private String address;
 
+    /**
+     * AccessLevel.NONE即默认不生成getter
+     */
     @ApiModelProperty(value = "是否启用")
+    @Getter(AccessLevel.NONE)
     private Boolean enabled;
 
     @ApiModelProperty(value = "用户名")
@@ -95,6 +101,11 @@ public class Admin implements Serializable, UserDetails {
         return true;
     }
 
+    /**
+     * 此方法是UserDetail中的方法，与该Admin对象中的enable同名，相当于对其重写getter，故因设置lombok不生成enable的getter，用注解见上
+     *
+     * @return 用户是否被禁用
+     */
     @Override
     public boolean isEnabled() {
         return this.enabled;
