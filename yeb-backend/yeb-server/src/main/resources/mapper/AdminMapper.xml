@@ -36,7 +36,7 @@
           <if test="keywords != null and keywords != ''">
               AND a.id = ar.adminId
               AND ar.rid = r.id
-              AND a.`name` LIKE CONCAT('%','#{keywords}','%')
+              AND a.`name` LIKE CONCAT('%',#{keywords},'%')
           </if>
     </select>
 
