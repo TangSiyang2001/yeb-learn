@@ -24,7 +24,7 @@ public interface IRoleService extends IService<Role> {
 
     /**
      * 获取所有角色
-     * @return
+     * @return 结果
      */
     Result listRoles();
 }

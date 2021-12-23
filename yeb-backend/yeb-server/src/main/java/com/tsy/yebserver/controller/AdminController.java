@@ -47,7 +47,7 @@ public class AdminController {
     }
 
     @ApiOperation("修改操作员")
-    @PostMapping
+    @PutMapping
     public Result updateAdmin(@RequestBody Admin admin) {
         return adminService.updateById(admin) ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
@@ -58,5 +58,9 @@ public class AdminController {
         return adminService.removeById(id) ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
-
+    @ApiOperation("更新操作员角色")
+    @PutMapping("/roles")
+    public Result updateAdminRoles(@RequestBody Integer adminId,Integer[] roleIds){
+        return adminService.updateAdminRoles(adminId,roleIds);
+    }
 }
