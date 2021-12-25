@@ -1,4 +1,4 @@
-package com.tsy.yebserver.handler;
+package com.tsy.yebserver.common.handler;
 
 import com.tsy.yebserver.vo.Result;
 import lombok.extern.slf4j.Slf4j;

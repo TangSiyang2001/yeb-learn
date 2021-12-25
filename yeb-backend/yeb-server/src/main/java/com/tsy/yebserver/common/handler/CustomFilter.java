@@ -1,4 +1,4 @@
-package com.tsy.yebserver.handler;
+package com.tsy.yebserver.common.handler;
 
 import com.tsy.yebserver.dao.entity.Menu;
 import com.tsy.yebserver.dao.entity.Role;

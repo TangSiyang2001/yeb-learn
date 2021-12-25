@@ -1,4 +1,4 @@
-package com.tsy.yebserver.handler;
+package com.tsy.yebserver.common.handler;
 
 import com.tsy.yebserver.service.ISsoService;
 import com.tsy.yebserver.utils.JwtUtils;

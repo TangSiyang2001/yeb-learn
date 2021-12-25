@@ -1,4 +1,4 @@
-package com.tsy.yebserver.handler;
+package com.tsy.yebserver.common.handler;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
