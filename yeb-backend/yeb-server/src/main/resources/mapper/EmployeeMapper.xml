@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsy.yebserver.dao.mapper.EmployeeMapper">
+
+    <resultMap id="BaseResultMap" type="com.tsy.yebserver.dao.entity.Employee">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="birthday" property="birthday" />
+        <result column="idCard" property="idCard" />
+        <result column="wedlock" property="wedlock" />
+        <result column="nationId" property="nationId" />
+        <result column="nativePlace" property="nativePlace" />
+        <result column="politicId" property="politicId" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="address" property="address" />
+        <result column="departmentId" property="departmentId" />
+        <result column="jobLevelId" property="jobLevelId" />
+        <result column="posId" property="posId" />
+        <result column="engageForm" property="engageForm" />
+        <result column="tiptopDegree" property="tiptopDegree" />
+        <result column="specialty" property="specialty" />
+        <result column="school" property="school" />
+        <result column="beginDate" property="beginDate" />
+        <result column="workState" property="workState" />
+        <result column="workID" property="workID" />
+        <result column="contractTerm" property="contractTerm" />
+        <result column="conversionTime" property="conversionTime" />
+        <result column="notWorkDate" property="notWorkDate" />
+        <result column="beginContract" property="beginContract" />
+        <result column="endContract" property="endContract" />
+        <result column="workAge" property="workAge" />
+        <result column="salaryId" property="salaryId" />
+    </resultMap>
+    
+    <resultMap id="EmployeeInfo" type="com.tsy.yebserver.dao.entity.Employee" extends="BaseResultMap">
+        <association property="nation" javaType="com.tsy.yebserver.dao.entity.Nation">
+            <id column="nid" property="id" />
+            <result column="n_name" property="name" />
+        </association>
+        <association property="politicsStatus" javaType="com.tsy.yebserver.dao.entity.PoliticsStatus">
+            <id column="pid" property="id" />
+            <result column="p_name" property="name" />
+        </association>
+        <association property="department" javaType="com.tsy.yebserver.dao.entity.Department">
+            <id column="did" property="id" />
+            <result column="d_name" property="name" />
+        </association>
+        <association property="joblevel" javaType="com.tsy.yebserver.dao.entity.JobLevel">
+            <id column="j_id" property="id" />
+            <result column="j_name" property="name" />
+        </association>
+        <association property="position" javaType="com.tsy.yebserver.dao.entity.Position">
+            <id column="pos_id" property="id" />
+            <result column="pos_name" property="name" />
+        </association>
+    </resultMap>
+    
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge, salaryId
+    </sql>
+
+    <select id="listEmployeeByPage" resultMap="EmployeeInfo">
+        SELECT
+            e.*,
+            n.id AS n_id,
+            n.`name` AS n_name,
+            p.id AS p_id,
+            p.`name` AS p_name,
+            d.id AS d_id,
+            d.`name` AS d_name,
+            j.id AS j_id,
+            j.`name` AS j_name,
+            pos.id AS pos_id,
+            pos.`name` AS pos_name
+        FROM
+            t_employee e,
+            t_nation n,
+            t_politics_status p,
+            t_department d,
+            t_joblevel j,
+            t_position pos
+        WHERE
+            e.nationId = n.id
+          AND e.politicId = p.id
+          AND e.departmentId = d.id
+          AND e.jobLevelId = j.id
+          AND e.posId = pos.id
+        <if test="employee.name != null and '' != employee.name ">
+            AND e.name like concat('%',#{employee.name},'%')
+        </if>
+        <if test="employee.politicId != null">
+            AND e.politicId = #{employee.politicId}
+        </if>
+        <if test="employee.nationId != null">
+            AND e.nationId = #{employee.nationId}
+        </if>
+        <if test="employee.jobLevelId != null">
+            AND e.jobLevelId = #{employee.jobLevelId}
+        </if>
+        <if test="employee.posId != null" >
+            AND e.posId = #{employee.posId}
+        </if>
+        <if test="employee.departmentId != null">
+            AND e.departmentId = #{employee.departmentId}
+        </if>
+        <if test="null != employee.engageForm and '' != employee.engageForm">
+            AND e.engageForm = #{employee.engageForm}
+        </if>
+        <if test="null != beginDateScope and 2 == beginDateScope.length">
+            AND e.beginDate between #{beginDateScope[0]} and #{beginDateScope[1]}
+        </if>
+        ORDER BY
+            e.id
+    </select>
+</mapper>
