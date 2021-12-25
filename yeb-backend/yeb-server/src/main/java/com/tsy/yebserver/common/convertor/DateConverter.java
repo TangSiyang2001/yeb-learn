@@ -14,7 +14,7 @@ import java.time.LocalDate;
  */
 @Slf4j
 @Component
-public class DateConvertor implements Converter<String, LocalDate> {
+public class DateConverter implements Converter<String, LocalDate> {
 
     @Override
     public LocalDate convert(String source) {
