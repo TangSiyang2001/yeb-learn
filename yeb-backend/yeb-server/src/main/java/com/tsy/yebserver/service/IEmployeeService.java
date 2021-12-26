@@ -25,4 +25,10 @@ public interface IEmployeeService extends IService<Employee> {
      * @return 结果
      */
     Result listEmployeeByPage(PageParam pageParam, Employee employee, LocalDate[] beginDateScope);
+
+    /**
+     * 获取当前可用的新用户工号
+     * @return
+     */
+    Result getAvailableWorkerId();
 }
