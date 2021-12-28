@@ -28,7 +28,21 @@ public interface IEmployeeService extends IService<Employee> {
 
     /**
      * 获取当前可用的新用户工号
-     * @return
+     * @return 结果
      */
     Result getAvailableWorkerId();
+
+    /**
+     * 添加员工
+     * @param employee 员工
+     * @return 结果
+     */
+    Result addEmployee(Employee employee);
+
+    /**
+     * 修改员工信息
+     * @param employee 员工
+     * @return 结果
+     */
+    Result updateEmployee(Employee employee);
 }

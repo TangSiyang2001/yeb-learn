@@ -12,7 +12,9 @@ import com.tsy.yebserver.vo.param.PageParam;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +45,28 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         final List<Map<String, Object>> res = employeeMapper.selectMaps(new QueryWrapper<Employee>().select("max(workID)"));
         final int rawId = Integer.parseInt(String.valueOf(res.get(0).get("max(workID)")) + 1);
         return Result.success(String.format("%08d", rawId));
+    }
+
+    @Override
+    public Result addEmployee(Employee employee) {
+        //首先要设置合同期限 根据起止日期计算
+        setContractTerm(employee);
+        //插入信息
+        final int insertRecord = employeeMapper.insert(employee);
+        return insertRecord == 1 ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
+    }
+
+    @Override
+    public Result updateEmployee(Employee employee) {
+        setContractTerm(employee);
+        return super.updateById(employee) ? Result.success(null) :Result.fail(Result.CodeMsg.OPERATION_FAILED);
+    }
+
+    private void setContractTerm(Employee employee){
+        final LocalDate beginContract = employee.getBeginContract();
+        final LocalDate endContract = employee.getEndContract();
+        final long duration = beginContract.until(endContract, ChronoUnit.DAYS);
+        final DecimalFormat decimalFormat = new DecimalFormat("##.00");
+        employee.setContractTerm(Double.parseDouble(decimalFormat.format(duration/365.00)));
     }
 }

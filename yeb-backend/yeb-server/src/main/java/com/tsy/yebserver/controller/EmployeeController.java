@@ -49,6 +49,24 @@ public class EmployeeController {
         return employeeService.listEmployeeByPage(pageParam,employee,beginDateScope);
     }
 
+    @ApiOperation("添加员工")
+    @PostMapping("/add")
+    public Result addEmployee(@RequestBody Employee employee){
+        return employeeService.addEmployee(employee);
+    }
+
+    @ApiOperation("修改员工")
+    @PutMapping
+    public Result updateEmployee(@RequestBody Employee employee){
+        return employeeService.updateEmployee(employee);
+    }
+
+    @ApiOperation("删除员工")
+    @DeleteMapping("/{id}")
+    public Result deleteEmployee(@PathVariable Integer id){
+        return employeeService.removeById(id) ? Result.success(null) :Result.fail(Result.CodeMsg.OPERATION_FAILED);
+    }
+
     @ApiOperation("/获取所有政治面貌")
     @GetMapping("/politics_status")
     public Result listPoliticsStatus(){
