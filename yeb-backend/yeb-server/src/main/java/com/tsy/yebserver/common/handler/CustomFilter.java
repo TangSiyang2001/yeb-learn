@@ -12,19 +12,19 @@ import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * 权限控制，防止用户通过输入url直接访问菜单
+ * 要加Component注解注入才生效
+ *
  * @author Steven.T
  * @date 2021/12/1
  */
 @Component
 public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 
-    /**
-     * 要加Component注解注入才生效
-     */
     @Resource
     private IMenuService menuService;
 
@@ -46,7 +46,7 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
 
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
