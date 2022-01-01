@@ -1,5 +1,6 @@
 package com.tsy.yebserver.dao.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -32,6 +33,7 @@ public class Position implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "职位")
+    @Excel(name = "职位")
     private String name;
 
     @ApiModelProperty(value = "创建时间")
