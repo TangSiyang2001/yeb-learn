@@ -1,7 +1,7 @@
 package com.tsy.yebserver.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.tsy.yebserver.utils.HttpUtils;
+import com.tsy.yebserver.utils.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +33,6 @@ public class CaptchaController {
         final HttpSession session = request.getSession();
         session.setAttribute("captcha",text);
         final BufferedImage image = defaultKaptcha.createImage(text);
-        HttpUtils.outPutPageTypeResponse(response,image);
+        ResponseUtils.outPutPageTypeResponse(response,image);
     }
 }

@@ -6,7 +6,7 @@ import com.tsy.yebserver.common.handler.CustomUrlDecisionManager;
 import com.tsy.yebserver.common.handler.JwtAuthenticationFilter;
 import com.tsy.yebserver.service.IAdminService;
 import com.tsy.yebserver.service.IRoleService;
-import com.tsy.yebserver.utils.HttpUtils;
+import com.tsy.yebserver.utils.ResponseUtils;
 import com.tsy.yebserver.vo.Result;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -141,7 +141,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) ->
-                HttpUtils.outPutRestfulStringTypeResponse(response, Result.fail(Result.CodeMsg.NOT_LOGIN));
+                ResponseUtils.outPutRestfulStringTypeResponse(response, Result.fail(Result.CodeMsg.NOT_LOGIN));
     }
 
     /**
@@ -152,6 +152,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) ->
-                HttpUtils.outPutRestfulStringTypeResponse(response, Result.fail(Result.CodeMsg.LACK_OF_PERMISSION));
+                ResponseUtils.outPutRestfulStringTypeResponse(response, Result.fail(Result.CodeMsg.LACK_OF_PERMISSION));
     }
 }

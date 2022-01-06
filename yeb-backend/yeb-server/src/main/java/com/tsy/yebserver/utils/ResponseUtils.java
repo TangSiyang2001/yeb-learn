@@ -15,8 +15,8 @@ import java.io.PrintWriter;
  * @date 2021/11/18
  */
 @Slf4j
-public class HttpUtils {
-    private HttpUtils() {
+public class ResponseUtils {
+    private ResponseUtils() {
         throw new IllegalStateException("This is a util class...");
     }
 
