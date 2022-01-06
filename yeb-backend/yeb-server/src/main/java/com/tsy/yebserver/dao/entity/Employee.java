@@ -171,11 +171,4 @@ public class Employee implements Serializable {
     @ExcelEntity(name = "职位")
     private Position position;
 
-    public JobLevel getJoblevel() {
-        return jobLevel;
-    }
-
-    public void setJoblevel(JobLevel jobLevel){
-        this.jobLevel=jobLevel;
-    }
 }

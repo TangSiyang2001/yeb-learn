@@ -62,6 +62,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return super.updateById(employee) ? Result.success(null) :Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
+    @Override
+    public List<Employee> listEmployee() {
+        return employeeMapper.listEmployee();
+    }
+
     private void setContractTerm(Employee employee){
         final LocalDate beginContract = employee.getBeginContract();
         final LocalDate endContract = employee.getEndContract();

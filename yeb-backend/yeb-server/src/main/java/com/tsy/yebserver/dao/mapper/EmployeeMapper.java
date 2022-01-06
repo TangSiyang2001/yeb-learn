@@ -7,6 +7,7 @@ import com.tsy.yebserver.dao.entity.Employee;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -27,4 +28,10 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
      */
     IPage<Employee> listEmployeeByPage(Page<Employee> page, @Param("employee") Employee employee,
                                        @Param("beginDateScope") LocalDate... beginDateScope);
+
+    /**
+     * 查询所有员工
+     * @return 员工列表
+     */
+    List<Employee> listEmployee();
 }

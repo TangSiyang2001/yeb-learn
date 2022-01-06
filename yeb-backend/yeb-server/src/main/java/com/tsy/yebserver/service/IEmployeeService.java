@@ -6,6 +6,7 @@ import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.PageParam;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <p>
@@ -45,4 +46,10 @@ public interface IEmployeeService extends IService<Employee> {
      * @return 结果
      */
     Result updateEmployee(Employee employee);
+
+    /**
+     * 获取所有员工
+     * @return 员工列表
+     */
+    List<Employee> listEmployee();
 }
