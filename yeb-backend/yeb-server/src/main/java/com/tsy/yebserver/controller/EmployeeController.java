@@ -2,9 +2,11 @@ package com.tsy.yebserver.controller;
 
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
-import com.tsy.yebserver.dao.entity.Employee;
+import com.tsy.yebserver.dao.entity.*;
 import com.tsy.yebserver.service.*;
 import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.PageParam;
@@ -13,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -80,7 +83,7 @@ public class EmployeeController {
 
     @ApiOperation("导出员工")
     @GetMapping(value = "/export", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public void exportEmployeeTable(HttpServletResponse response) throws IOException {
+    public void exportEmployeeInfo(HttpServletResponse response) throws IOException {
         response.setHeader(
                 "content-disposition",
                 "attachment;filename=" + URLEncoder.encode("员工信息表.xls", StandardCharsets.UTF_8)
@@ -99,6 +102,18 @@ public class EmployeeController {
         }
     }
 
+    @ApiOperation("导入员工")
+    @PostMapping("/import")
+    public Result importEmployeeInfo(MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        List<Employee> employees = ExcelImportUtil.importExcel(
+                multipartFile.getInputStream(),
+                Employee.class,
+                importParams
+        );
+        return employeeService.saveEmployeeInfoList(employees);
+    }
 
     @ApiOperation("/获取所有政治面貌")
     @GetMapping("/politics_status")

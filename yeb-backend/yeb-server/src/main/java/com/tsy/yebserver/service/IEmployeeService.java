@@ -52,4 +52,11 @@ public interface IEmployeeService extends IService<Employee> {
      * @return 员工列表
      */
     List<Employee> listEmployee();
+
+    /**
+     *
+     * @param employees
+     * @return
+     */
+    Result saveEmployeeInfoList(List<Employee> employees);
 }

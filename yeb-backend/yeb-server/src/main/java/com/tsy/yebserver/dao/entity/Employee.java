@@ -33,6 +33,7 @@ public class Employee implements Serializable {
 
     @ApiModelProperty(value = "员工编号")
     @TableId(value = "id", type = IdType.AUTO)
+    @Excel(name = "员工编号")
     private Integer id;
 
     @ApiModelProperty(value = "员工姓名")
@@ -88,6 +89,7 @@ public class Employee implements Serializable {
     private Integer posId;
 
     @ApiModelProperty(value = "聘用形式")
+    @Excel(name = "聘用形式")
     private String engageForm;
 
     @ApiModelProperty(value = "最高学历")

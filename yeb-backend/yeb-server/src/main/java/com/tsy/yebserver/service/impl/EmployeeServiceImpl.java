@@ -4,12 +4,13 @@ package com.tsy.yebserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tsy.yebserver.dao.entity.Employee;
+import com.tsy.yebserver.dao.entity.*;
 import com.tsy.yebserver.dao.mapper.EmployeeMapper;
-import com.tsy.yebserver.service.IEmployeeService;
+import com.tsy.yebserver.service.*;
 import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.PageParam;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.DecimalFormat;
@@ -31,6 +32,21 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Resource
     private EmployeeMapper employeeMapper;
+
+    @Resource
+    private IPoliticsStatusService politicsStatusService;
+
+    @Resource
+    private IJobLevelService jobLevelService;
+
+    @Resource
+    private INationService nationService;
+
+    @Resource
+    private IPositionService positionService;
+
+    @Resource
+    private IDepartmentService departmentService;
 
     @Override
     public Result listEmployeeByPage(PageParam pageParam, Employee employee, LocalDate[] beginDateScope) {
@@ -65,6 +81,31 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public List<Employee> listEmployee() {
         return employeeMapper.listEmployee();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result saveEmployeeInfoList(List<Employee> employees) {
+        final List<Nation> nations = nationService.list();
+        final List<PoliticsStatus> politicsStatuses = politicsStatusService.list();
+        final List<Position> positions = positionService.list();
+        final List<Department> departments = departmentService.list();
+        final List<JobLevel> jobLevels = jobLevelService.list();
+        //如下四个实体类中重写hashcode方法，用name作为hashcode后，利用indexOf（根据equals寻址）来获取查询得到的相应id
+        for (Employee employee : employees) {
+            Nation nation = new Nation(employee.getNation().getName());
+            employee.setNationId(nations.get(nations.indexOf(nation)).getId());
+            Position position = new Position(employee.getPosition().getName());
+            employee.setPosId(positions.get(positions.indexOf(position)).getId());
+            Department department = new Department(employee.getDepartment().getName());
+            employee.setDepartmentId(departments.get(departments.indexOf(department)).getId());
+            PoliticsStatus politicsStatus = new PoliticsStatus(employee.getPoliticsStatus().getName());
+            employee.setPoliticId(politicsStatuses.get(politicsStatuses.indexOf(politicsStatus)).getId());
+            JobLevel jobLevel=new JobLevel(employee.getJobLevel().getName());
+            employee.setJobLevelId(jobLevels.get(jobLevels.indexOf(jobLevel)).getId());
+        }
+        final boolean isSuccess = super.saveOrUpdateBatch(employees);
+        return isSuccess ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
     private void setContractTerm(Employee employee){
