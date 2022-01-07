@@ -54,9 +54,10 @@ public interface IEmployeeService extends IService<Employee> {
     List<Employee> listEmployee();
 
     /**
+     *批量导入员工信息
      *
-     * @param employees
-     * @return
+     * @param employees 员工信息
+     * @return 执行结果
      */
     Result saveEmployeeInfoList(List<Employee> employees);
 }
