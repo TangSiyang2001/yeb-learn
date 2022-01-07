@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -20,7 +19,9 @@ import java.io.Serializable;
  * @since 2021-11-13
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = false,of = "name")
 @TableName("t_politics_status")
 @ApiModel(value="PoliticsStatus对象", description="")
 public class PoliticsStatus implements Serializable {
@@ -33,7 +34,7 @@ public class PoliticsStatus implements Serializable {
 
     @ApiModelProperty(value = "政治面貌")
     @Excel(name = "政治面貌")
+    @NonNull
     private String name;
-
 
 }

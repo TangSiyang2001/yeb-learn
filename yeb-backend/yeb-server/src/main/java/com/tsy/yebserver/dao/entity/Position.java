@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,7 +20,9 @@ import java.time.LocalDateTime;
  * @since 2021-11-13
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode(of = "name")
 @TableName("t_position")
 @ApiModel(value="Position对象", description="")
 public class Position implements Serializable {
@@ -34,6 +35,7 @@ public class Position implements Serializable {
 
     @ApiModelProperty(value = "职位")
     @Excel(name = "职位")
+    @NonNull
     private String name;
 
     @ApiModelProperty(value = "创建时间")
