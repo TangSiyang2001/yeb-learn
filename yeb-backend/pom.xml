@@ -4,6 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>yeb-generator</module>
+        <module>yeb-mail</module>
+        <module>yeb-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -75,6 +77,7 @@
                 <artifactId>easypoi-spring-boot-starter</artifactId>
                 <version>4.3.0</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>

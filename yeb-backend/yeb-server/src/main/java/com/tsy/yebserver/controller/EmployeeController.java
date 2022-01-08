@@ -89,7 +89,7 @@ public class EmployeeController {
                 "attachment;filename=" + URLEncoder.encode("员工信息表.xls", StandardCharsets.UTF_8)
         );
         final ServletOutputStream outputStream = response.getOutputStream();
-        final List<Employee> employees = employeeService.listEmployee();
+        final List<Employee> employees = employeeService.getEmployeeById(null);
         final Workbook sheets = ExcelExportUtil.exportExcel(
                 new ExportParams("员工信息", "员工信息表", ExcelType.HSSF),
                 Employee.class,

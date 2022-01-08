@@ -1,0 +1,15 @@
+server:
+  port: 8082
+spring:
+  mail:
+    host: smtp.qq.com
+    port: 25
+    protocol: smtp
+    username: tangsiyang2001@foxmail.com
+    password: ogfczuqomlxgbdhb
+
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672

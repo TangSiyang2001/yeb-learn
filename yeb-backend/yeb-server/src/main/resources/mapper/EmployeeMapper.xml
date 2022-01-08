@@ -115,29 +115,32 @@
         ORDER BY
         e.id
     </select>
-    <select id="listEmployee" resultMap="EmployeeInfo">
+    <select id="getEmployeeById" resultMap="EmployeeInfo">
         SELECT e.*,
-               n.id       AS n_id,
-               n.`name`   AS n_name,
-               p.id       AS p_id,
-               p.`name`   AS p_name,
-               d.id       AS d_id,
-               d.`name`   AS d_name,
-               j.id       AS j_id,
-               j.`name`   AS j_name,
-               pos.id     AS pos_id,
-               pos.`name` AS pos_name
+        n.id AS n_id,
+        n.`name` AS n_name,
+        p.id AS p_id,
+        p.`name` AS p_name,
+        d.id AS d_id,
+        d.`name` AS d_name,
+        j.id AS j_id,
+        j.`name` AS j_name,
+        pos.id AS pos_id,
+        pos.`name` AS pos_name
         FROM t_employee e,
-             t_nation n,
-             t_politics_status p,
-             t_department d,
-             t_joblevel j,
-             t_position pos
+        t_nation n,
+        t_politics_status p,
+        t_department d,
+        t_joblevel j,
+        t_position pos
         WHERE e.nationId = n.id
-          AND e.politicId = p.id
-          AND e.departmentId = d.id
-          AND e.jobLevelId = j.id
-          AND e.posId = pos.id
+        AND e.politicId = p.id
+        AND e.departmentId = d.id
+        AND e.jobLevelId = j.id
+        AND e.posId = pos.id
+        <if test="id != null">
+            AND e.id=#{id}
+        </if>
         ORDER BY e.id
     </select>
 </mapper>

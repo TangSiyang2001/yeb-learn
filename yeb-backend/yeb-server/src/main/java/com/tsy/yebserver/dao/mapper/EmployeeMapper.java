@@ -30,8 +30,9 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
                                        @Param("beginDateScope") LocalDate... beginDateScope);
 
     /**
-     * 查询所有员工
+     * 根据id获取员工
+     * @param id 如果为空，获取所有
      * @return 员工列表
      */
-    List<Employee> listEmployee();
+    List<Employee> getEmployeeById(Integer id);
 }

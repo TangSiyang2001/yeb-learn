@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
  * @since 2021-11-13
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode()
 @TableName("t_employee")
 @ApiModel(value="Employee对象")

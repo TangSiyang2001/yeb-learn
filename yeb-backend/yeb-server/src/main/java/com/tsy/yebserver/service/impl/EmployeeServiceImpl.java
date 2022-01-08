@@ -9,6 +9,7 @@ import com.tsy.yebserver.dao.mapper.EmployeeMapper;
 import com.tsy.yebserver.service.*;
 import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.PageParam;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,9 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Resource
     private IDepartmentService departmentService;
 
+    @Resource
+    private RabbitTemplate rabbitTemplate;
+
     @Override
     public Result listEmployeeByPage(PageParam pageParam, Employee employee, LocalDate[] beginDateScope) {
         Page<Employee> page=new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
@@ -69,6 +73,9 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         setContractTerm(employee);
         //插入信息
         final int insertRecord = employeeMapper.insert(employee);
+        //insert后会回写id
+        Employee targetEmployee=employeeMapper.getEmployeeById(employee.getId()).get(0);
+        rabbitTemplate.convertAndSend("mail.welcome",targetEmployee);
         return insertRecord == 1 ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
@@ -79,8 +86,8 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     @Override
-    public List<Employee> listEmployee() {
-        return employeeMapper.listEmployee();
+    public List<Employee> getEmployeeById(Integer id) {
+        return employeeMapper.getEmployeeById(id);
     }
 
     @Override

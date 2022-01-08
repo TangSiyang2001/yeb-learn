@@ -48,10 +48,11 @@ public interface IEmployeeService extends IService<Employee> {
     Result updateEmployee(Employee employee);
 
     /**
-     * 获取所有员工
+     * 根据id获取员工
+     * @param id 如果为空，获取所有
      * @return 员工列表
      */
-    List<Employee> listEmployee();
+    List<Employee> getEmployeeById(Integer id);
 
     /**
      *批量导入员工信息

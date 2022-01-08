@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>入职欢迎</title>
+</head>
+<body>
+欢迎<span th:text="${name}"></span>加入<br>
+入职信息：<br>
+<table border="1">
+    <tr>
+        <td>姓名</td>
+        <td th:text="${name}"></td>
+        <td>职位</td>
+        <td th:text="${posName}"></td>
+        <td>职位</td>
+        <td th:text="${jobLevelName}"></td>
+        <td>部门</td>
+        <td th:text="${departmentName}"></td>
+    </tr>
+</table>
+<p>
+    加油！！！！！！！！！！！！！！！
+</p>
+</body>
+</html>
