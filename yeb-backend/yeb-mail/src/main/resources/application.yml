@@ -7,9 +7,30 @@ spring:
     protocol: smtp
     username: tangsiyang2001@foxmail.com
     password: ogfczuqomlxgbdhb
+  redis:
+    host: localhost
+    lettuce:
+      pool:
+        max-active: 1024
+        max-wait: 1000ms
+        max-idle: 200
+        min-idle: 5
+
 
   rabbitmq:
     username: guest
     password: guest
     host: localhost
     port: 5672
+    listener:
+      simple:
+        concurrency: 1 # Minimum number of consumers.
+        max-concurrency: 20 # Maximum number of consumers.
+        prefetch: 50
+        default-requeue-rejected: true #意思是，消息被拒后（即未消费），重新（true）放入队列
+        acknowledge-mode: manual # 手动确认
+        retry:
+          enabled: true #是否开启消费者重试（为false时关闭消费者重试，这时消费端代码异常会一直重复收到消息）
+          max-attempts: 3
+          initial-interval: 5000ms
+

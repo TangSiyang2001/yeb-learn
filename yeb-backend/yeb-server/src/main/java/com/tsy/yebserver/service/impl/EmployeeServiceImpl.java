@@ -9,7 +9,6 @@ import com.tsy.yebserver.dao.mapper.EmployeeMapper;
 import com.tsy.yebserver.service.*;
 import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.PageParam;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Steven
@@ -50,11 +49,11 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     private IDepartmentService departmentService;
 
     @Resource
-    private RabbitTemplate rabbitTemplate;
+    private IMqService mqService;
 
     @Override
     public Result listEmployeeByPage(PageParam pageParam, Employee employee, LocalDate[] beginDateScope) {
-        Page<Employee> page=new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        Page<Employee> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
         final List<Employee> records = employeeMapper.listEmployeeByPage(page, employee, beginDateScope).getRecords();
         return Result.success(records);
     }
@@ -68,21 +67,27 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Result addEmployee(Employee employee) {
         //首先要设置合同期限 根据起止日期计算
         setContractTerm(employee);
         //插入信息
         final int insertRecord = employeeMapper.insert(employee);
-        //insert后会回写id
-        Employee targetEmployee=employeeMapper.getEmployeeById(employee.getId()).get(0);
-        rabbitTemplate.convertAndSend("mail.welcome",targetEmployee);
-        return insertRecord == 1 ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
+        if (insertRecord == 1) {
+            //insert后会回写id
+            Employee targetEmployee = employeeMapper.getEmployeeById(employee.getId()).get(0);
+            //通知消息队列发送邮件
+            mqService.sendEmployeeMessage(targetEmployee);
+            return Result.success(null);
+        } else {
+            return Result.fail(Result.CodeMsg.OPERATION_FAILED);
+        }
     }
 
     @Override
     public Result updateEmployee(Employee employee) {
         setContractTerm(employee);
-        return super.updateById(employee) ? Result.success(null) :Result.fail(Result.CodeMsg.OPERATION_FAILED);
+        return super.updateById(employee) ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
     @Override
@@ -108,18 +113,18 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             employee.setDepartmentId(departments.get(departments.indexOf(department)).getId());
             PoliticsStatus politicsStatus = new PoliticsStatus(employee.getPoliticsStatus().getName());
             employee.setPoliticId(politicsStatuses.get(politicsStatuses.indexOf(politicsStatus)).getId());
-            JobLevel jobLevel=new JobLevel(employee.getJobLevel().getName());
+            JobLevel jobLevel = new JobLevel(employee.getJobLevel().getName());
             employee.setJobLevelId(jobLevels.get(jobLevels.indexOf(jobLevel)).getId());
         }
         final boolean isSuccess = super.saveOrUpdateBatch(employees);
         return isSuccess ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
-    private void setContractTerm(Employee employee){
+    private void setContractTerm(Employee employee) {
         final LocalDate beginContract = employee.getBeginContract();
         final LocalDate endContract = employee.getEndContract();
         final long duration = beginContract.until(endContract, ChronoUnit.DAYS);
         final DecimalFormat decimalFormat = new DecimalFormat("##.00");
-        employee.setContractTerm(Double.parseDouble(decimalFormat.format(duration/365.00)));
+        employee.setContractTerm(Double.parseDouble(decimalFormat.format(duration / 365.00)));
     }
 }

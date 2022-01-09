@@ -19,6 +19,18 @@ spring:
     password: guest
     host: localhost
     port: 5672
+    # 消息确认回调
+    publisher-confirm-type: correlated
+    # 消息失败回调
+    publisher-returns: true
+  redis:
+    host: localhost
+    lettuce:
+      pool:
+        max-active: 1024
+        max-wait: 1000ms
+        max-idle: 200
+        min-idle: 5
 
 mybatis-plus:
   configuration:
@@ -35,3 +47,4 @@ jwt:
   expiration: 604800
   #JWT负载中拿到开头
   tokenHead: Bearer
+
