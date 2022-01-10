@@ -44,7 +44,7 @@ jwt:
   #JWT加解密使用的秘钥
   secretKey: yeb-secret
   #JWT过期时间
-  expiration: 604800
+  expiration: 14400000
   #JWT负载中拿到开头
   tokenHead: Bearer
 
