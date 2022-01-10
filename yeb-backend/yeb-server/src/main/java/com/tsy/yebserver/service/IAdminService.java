@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.vo.Result;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -25,7 +27,7 @@ public interface IAdminService extends IService<Admin> {
      * @param keywords 关键词
      * @return 结果
      */
-    Result getAdminByKeywords(String keywords);
+    List<Admin> getAdminByKeywords(String keywords);
 
     /**
      * 更新操作员角色

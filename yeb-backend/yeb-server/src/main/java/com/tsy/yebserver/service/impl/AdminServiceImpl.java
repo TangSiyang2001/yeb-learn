@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -42,9 +43,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public Result getAdminByKeywords(String keywords) {
+    public List<Admin> getAdminByKeywords(String keywords) {
         final Integer adminId = (ssoService.getLoginAdmin()).getId();
-        return Result.success(adminMapper.getAdminByKeywords(adminId,keywords));
+        return adminMapper.getAdminByKeywords(adminId,keywords);
     }
 
     @Override

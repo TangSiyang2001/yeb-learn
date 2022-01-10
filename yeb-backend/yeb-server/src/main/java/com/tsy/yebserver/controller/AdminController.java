@@ -43,7 +43,7 @@ public class AdminController {
     @ApiOperation("获取操作员")
     @GetMapping
     public Result getAdminByKeywords(String keywords) {
-        return adminService.getAdminByKeywords(keywords);
+        return Result.success(adminService.getAdminByKeywords(keywords));
     }
 
     @ApiOperation("修改操作员")
