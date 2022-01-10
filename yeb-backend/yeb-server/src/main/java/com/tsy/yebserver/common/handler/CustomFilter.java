@@ -40,7 +40,7 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
                 return SecurityConfig.createList(roleNames);
             }
         }
-        //TODO：理解：没有匹配的，默认是登录即可访问，ROLE_LOGIN就是登录以后的默认角色
+        //理解：没有匹配的，默认是登录即可访问，ROLE_LOGIN就是登录以后的默认角色
         return SecurityConfig.createList("ROLE_LOGIN");
     }
 

@@ -88,7 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .headers()
                 //无需自定义缓存
                 .cacheControl();
-        //TODO:添加自定义登录授权过滤器，添加自定义未登录授权结果返回
+        //添加自定义登录授权过滤器，添加自定义未登录授权结果返回
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .authenticationEntryPoint(authenticationEntryPoint());
