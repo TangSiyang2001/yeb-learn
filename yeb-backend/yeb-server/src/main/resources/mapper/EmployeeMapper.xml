@@ -57,6 +57,27 @@
         </association>
     </resultMap>
 
+    <resultMap id="EmployeeWithSalary" type="com.tsy.yebserver.dao.entity.Employee" extends="BaseResultMap">
+        <association property="salary" javaType="com.tsy.yebserver.dao.entity.Salary">
+            <id column="s_id" property="id"/>
+            <result column="s_name" property="name"/>
+            <result column="s_basicSalary" property="basicSalary"/>
+            <result column="s_bonus" property="bonus"/>
+            <result column="s_launchSalary" property="lunchSalary"/>
+            <result column="s_trafficSalary" property="trafficSalary"/>
+            <result column="s_allSalary" property="allSalary"/>
+            <result column="s_pensionBase" property="pensionBase"/>
+            <result column="s_pensionPer" property="pensionPer"/>
+            <result column="s_medicalBase" property="medicalBase"/>
+            <result column="s_medicalPer" property="medicalPer"/>
+            <result column="s_accumulationFundBase" property="accumulationFundBase"/>
+            <result column="s_accumulationFundPer" property="accumulationFundPer"/>
+        </association>
+        <association property="department" javaType="com.tsy.yebserver.dao.entity.Department">
+            <result column="d_name" property="name"/>
+        </association>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, gender, birthday, idCard, wedlock, nationId, nativePlace, politicId, email, phone, address, departmentId, jobLevelId, posId, engageForm, tiptopDegree, specialty, school, beginDate, workState, workID, contractTerm, conversionTime, notWorkDate, beginContract, endContract, workAge, salaryId
@@ -121,7 +142,6 @@
         n.`name` AS n_name,
         p.id AS p_id,
         p.`name` AS p_name,
-        d.id AS d_id,
         d.`name` AS d_name,
         j.id AS j_id,
         j.`name` AS j_name,
@@ -141,6 +161,30 @@
         <if test="id != null">
             AND e.id=#{id}
         </if>
+        ORDER BY e.id
+    </select>
+
+    <select id="listEmployeeWithSalariesByPage" resultMap="EmployeeWithSalary">
+        SELECT e.*,
+               d.`name`               AS d_name,
+               s.id                   AS s_id,
+               s.`name`               AS s_name,
+               s.basicSalary          AS s_basicSalary,
+               s.bonus                AS s_bonus,
+               s.lunchSalary          AS s_lunchSalary,
+               s.trafficSalary        AS s_trafficSalary,
+               s.allSalary            AS s_allSalary,
+               s.pensionBase          AS s_pensionBase,
+               s.pensionPer           AS s_pensionPer,
+               s.medicalBase          AS s_medicalBase,
+               s.medicalPer           AS s_medicalPer,
+               s.accumulationFundPer  AS s_accumulationFundPer,
+               s.accumulationFundBase AS s_accumulationFundBase
+        FROM t_employee e,
+             t_department d,
+             t_salary s
+        WHERE e.salaryId = s.id
+          AND e.departmentId = d.id
         ORDER BY e.id
     </select>
 </mapper>

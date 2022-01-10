@@ -61,4 +61,12 @@ public interface IEmployeeService extends IService<Employee> {
      * @return 执行结果
      */
     Result saveEmployeeInfoList(List<Employee> employees);
+
+    /**
+     *
+     * 获取所有员工账套
+     * @param pageParam 分页参数
+     * @return 结果
+     */
+    Result listEmployeeWithSalariesByPage(PageParam pageParam);
 }

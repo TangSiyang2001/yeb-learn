@@ -120,6 +120,13 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         return isSuccess ? Result.success(null) : Result.fail(Result.CodeMsg.OPERATION_FAILED);
     }
 
+    @Override
+    public Result listEmployeeWithSalariesByPage(PageParam pageParam) {
+        final Page<Employee> page = new Page<>(pageParam.getPageNum(),pageParam.getPageSize());
+        final List<Employee> records = employeeMapper.listEmployeeWithSalariesByPage(page).getRecords();
+        return Result.success(records);
+    }
+
     private void setContractTerm(Employee employee) {
         final LocalDate beginContract = employee.getBeginContract();
         final LocalDate endContract = employee.getEndContract();

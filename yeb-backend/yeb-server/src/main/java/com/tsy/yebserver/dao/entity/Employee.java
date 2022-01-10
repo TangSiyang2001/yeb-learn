@@ -175,4 +175,8 @@ public class Employee implements Serializable {
     @ExcelEntity(name = "职位")
     private Position position;
 
+    @ApiModelProperty("工资账套")
+    @TableField(exist = false)
+    private Salary salary;
+
 }
