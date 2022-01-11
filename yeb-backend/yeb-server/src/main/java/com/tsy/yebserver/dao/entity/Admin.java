@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.tsy.yebserver.common.handler.CustomAuthoritiesDeserializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
@@ -80,6 +82,7 @@ public class Admin implements Serializable, UserDetails {
      * 将用户角色列表中的角色名组成列表作为GrantedAuthority（已授予的权限）返回
      * @return 已授予的权限列表（即角色名列表）
      */
+    @JsonDeserialize(using = CustomAuthoritiesDeserializer.class)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
