@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author Steven.T
  * @date 2022/1/11
  */
+@Component
 public class CustomAuthoritiesDeserializer extends JsonDeserializer<Collection<? extends GrantedAuthority>> {
 
     @Override

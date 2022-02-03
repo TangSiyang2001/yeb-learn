@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasLength(rawContent) && rawContent.startsWith(tokenHead)) {
             final String tokenContent = rawContent.substring(tokenHead.length());
             final String username = JwtUtils.getUsernameFromToken(tokenContent);
-            //存在username但未登录
+            //存在username但未登录认证
             if (StringUtils.hasLength(username) && ssoService.getLoginAuthentication() == null) {
                 final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 final boolean isValid = JwtUtils.validateToken(tokenContent, userDetails);

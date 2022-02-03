@@ -22,6 +22,7 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
             throws AccessDeniedException, InsufficientAuthenticationException {
+
         for (ConfigAttribute configAttribute : configAttributes) {
             //获取当前url对应的角色列表（在CustomFilter中设置）的其中一个角色
             final String requiredRoleName = configAttribute.getAttribute();

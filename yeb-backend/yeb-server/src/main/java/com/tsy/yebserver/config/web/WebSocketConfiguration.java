@@ -30,6 +30,7 @@ import javax.annotation.Resource;
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
+
     @Resource
     private JwtConfiguration jwtConfiguration;
 
@@ -69,7 +70,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
             @Override
             public Message<?> preSend(Message<?> message, MessageChannel channel) {
                 final StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-                Assert.notNull(accessor,"accessor should be not null");
+                Assert.notNull(accessor, "accessor should be not null");
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
                     //如果是连接
                     final String rawToken = accessor.getFirstNativeHeader("Auth-Token");
@@ -77,12 +78,12 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                         //截取tokenHead即Bearer后面的jwt令牌
                         final String authToken = rawToken.substring(jwtConfiguration.getTokenHead().length());
                         final String username = JwtUtils.getUsernameFromToken(authToken);
-                        if(StringUtils.hasLength(username)){
+                        if (StringUtils.hasLength(username)) {
                             //登录
                             final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                             //验证token是否有效并重新设置用户对象
-                            final boolean isValid = JwtUtils.validateToken(authToken,userDetails);
-                            if(isValid){
+                            final boolean isValid = JwtUtils.validateToken(authToken, userDetails);
+                            if (isValid) {
                                 final var authenticationToken = new UsernamePasswordAuthenticationToken(
                                         userDetails,
                                         null,

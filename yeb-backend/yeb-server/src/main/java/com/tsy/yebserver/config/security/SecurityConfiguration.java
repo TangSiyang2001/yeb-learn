@@ -1,9 +1,9 @@
 package com.tsy.yebserver.config.security;
 
-import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.common.handler.CustomFilter;
 import com.tsy.yebserver.common.handler.CustomUrlDecisionManager;
 import com.tsy.yebserver.common.handler.JwtAuthenticationFilter;
+import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.service.IAdminService;
 import com.tsy.yebserver.service.IRoleService;
 import com.tsy.yebserver.utils.ResponseUtils;
