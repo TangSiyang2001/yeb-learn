@@ -16,6 +16,12 @@ public class MenuVo {
     @ApiModelProperty(value = "id")
     private Integer id;
 
+    @ApiModelProperty(value = "url")
+    private String url;
+
+    @ApiModelProperty(value = "path")
+    private String path;
+
     @ApiModelProperty(value = "组件")
     private String component;
 

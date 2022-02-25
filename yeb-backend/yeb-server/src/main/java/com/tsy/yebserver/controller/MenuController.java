@@ -1,16 +1,13 @@
 package com.tsy.yebserver.controller;
 
 
-import com.tsy.yebserver.dao.entity.Admin;
 import com.tsy.yebserver.service.IMenuService;
-import com.tsy.yebserver.service.ISsoService;
-import com.tsy.yebserver.vo.MenuVo;
+import com.tsy.yebserver.vo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * <p>
@@ -28,7 +25,7 @@ public class MenuController {
     private IMenuService menuService;
 
     @GetMapping("/menu")
-    public List<MenuVo> getMenuByAdminId(){
-        return menuService.getMenuByAdminId();
+    public Result getMenuByAdminId(){
+        return Result.success(menuService.getMenuByAdminId());
     }
 }

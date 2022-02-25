@@ -5,6 +5,7 @@ import com.tsy.yebserver.service.ISsoService;
 import com.tsy.yebserver.utils.JwtUtils;
 import com.tsy.yebserver.vo.Result;
 import com.tsy.yebserver.vo.param.LoginParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +25,7 @@ import java.util.Objects;
  * @author Steven.T
  * @date 2021/11/13
  */
+@Slf4j
 @Service
 public class SsoServiceImpl implements ISsoService {
 
